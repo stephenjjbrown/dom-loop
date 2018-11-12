@@ -26,7 +26,7 @@ class AnimationLoop {
      */
     read(callback, once, throttle) {
         if (once == null)
-            once = false;
+            once = true;
         let resultCallback = callback;
         if (once)
             resultCallback = () => this.removeReadEventHandler(id), callback();
@@ -48,7 +48,7 @@ class AnimationLoop {
      */
     write(callback, once, throttle) {
         if (once == null)
-            once = false;
+            once = true;
         let resultCallback = callback;
         if (once)
             resultCallback = () => this.removeWriteEventHandler(id), callback();

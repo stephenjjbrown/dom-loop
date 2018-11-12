@@ -4,6 +4,7 @@
   "description": "Batches DOM read/write operations within a constant requestAnimationFrame loop",
   "main": "index.js",
   "scripts": {
+    "build": "./node_modules/.bin/tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

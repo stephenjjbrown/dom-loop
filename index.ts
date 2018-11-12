@@ -11,9 +11,11 @@ class AnimationLoop {
 	// Virtual frame number based on 60fps. Useful for throttling only. Not an actual frame number
 	public frameNumber: number = 0;
 
+    // TODO: Use array of event handler arrays, with each given a designated tag (i.e. "read", "write", "foo")
 	private reads: LoopEventHandler[] = [];
 	private writes: LoopEventHandler[] = [];
 
+    // TODO: Turn off loop while no callbacks registered, turn on upon first callback registration
 	constructor() {
 		// The main loop
 		const loop = () => {
@@ -34,7 +36,7 @@ class AnimationLoop {
 	 * @param throttle Run every nth frame (between 0 and 59)
 	 */
 	public read(callback: () => void, once?: boolean, throttle?: number) {
-		if (once == null) once = false;
+		if (once == null) once = true;
 
 		let resultCallback = callback;
 		if (once)
@@ -58,7 +60,7 @@ class AnimationLoop {
 	 * @param throttle Run every nth frame (between 0 and 59)
 	 */
 	public write(callback: () => void, once?: boolean, throttle?: number) {
-		if (once == null) once = false;
+		if (once == null) once = true;
 
 		let resultCallback = callback;
 		if (once)
