@@ -1,0 +1,22 @@
+{
+  "name": "dom-loop",
+  "version": "1.0.0",
+  "description": "Batches DOM read/write operations within a constant requestAnimationFrame loop",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/stephenjjbrown/dom-loop.git"
+  },
+  "author": "Stephen Brown",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stephenjjbrown/dom-loop/issues"
+  },
+  "homepage": "https://github.com/stephenjjbrown/dom-loop#readme",
+  "devDependencies": {
+    "typescript": "^3.1.6"
+  }
+}
