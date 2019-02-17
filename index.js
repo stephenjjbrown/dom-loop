@@ -3,9 +3,11 @@
  * It uses an frame-by-frame loop as its core, however.
  */
 class AnimationLoop {
+    // TODO: Turn off loop while no callbacks registered, turn on upon first callback registration
     constructor() {
         // Virtual frame number based on 60fps. Useful for throttling only. Not an actual frame number
         this.frameNumber = 0;
+        // TODO: Use array of event handler arrays, with each given a designated tag (i.e. "read", "write", "foo")
         this.reads = [];
         this.writes = [];
         // The main loop
