@@ -30,7 +30,7 @@ declare namespace DomAnimationLoop {
      * @param throttle Run every nth frame (between 0 and 59)
      */
     function write(callback: () => void, once?: boolean, throttle?: number): number;
-    function removeEventHandler(phaseName: string, id: number): boolean;
+    function removeEventHandler(id: number): boolean;
 }
 /**
  * Singleton instance of animation loop. A frame-by-frame loop used for animating DOM elements, as well as batching DOM read and write operations

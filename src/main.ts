@@ -81,7 +81,7 @@ namespace DomAnimationLoop {
 		let resultCallback = callback;
 
 		if (once)
-			resultCallback = () => { removeEventHandler(phase, id); callback() };
+			resultCallback = () => { removeEventHandler(id); callback() };
 
 		if (throttle) {
 			const originalResultCallback = resultCallback;
@@ -147,14 +147,16 @@ namespace DomAnimationLoop {
 		return id;
 	}
 
-	export function removeEventHandler(phaseName: string, id: number) {
-		const phase = _getPhase(phaseName);
+	export function removeEventHandler(id: number) {
+		for (let i = 0; i < phases.length; i++) {
+			const phase = phases[i];
 
-		const index = phase.handlers.findIndex(h => h.id === id);
+			const index = phase.handlers.findIndex(h => h.id === id);
 
-		if (index !== -1) {
-			phase.handlers.splice(index, 1);
-			return true;
+			if (index !== -1) {
+				phase.handlers.splice(index, 1);
+				return true;
+			}
 		}
 
 		return false;
