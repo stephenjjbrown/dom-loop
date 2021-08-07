@@ -1,6 +1,6 @@
 {
   "name": "dom-loop",
-  "version": "2.0.0-beta",
+  "version": "2.0.1-beta",
   "description": "Batches DOM read/write operations within a constant requestAnimationFrame loop",
   "keywords": [
     "animation",
