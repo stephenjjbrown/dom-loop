@@ -2,6 +2,19 @@
   "name": "dom-loop",
   "version": "2.0.0-beta",
   "description": "Batches DOM read/write operations within a constant requestAnimationFrame loop",
+  "keywords": [
+    "animation",
+    "requestanimationframe",
+    "batch",
+    "dom",
+    "read",
+    "write",
+    "fastdom",
+    "trashing",
+    "loop",
+    "game loop",
+    "animation loop"
+  ],
   "main": "lib/main.js",
   "types": "lib/main.d.ts",
   "scripts": {
