@@ -45,7 +45,7 @@ namespace DomAnimationLoop {
 				handlers.forEach(h => h.callback());
 			});
 
-			increment(); 
+			_increment(); 
 
 			requestAnimationFrame(loop);
 		};
@@ -91,7 +91,7 @@ namespace DomAnimationLoop {
 			};
 		}
 
-		const id = addEventHandler(phase, resultCallback);
+		const id = _addEventHandler(phase, resultCallback);
 		return id;
 	}
 
@@ -103,21 +103,6 @@ namespace DomAnimationLoop {
 	 */
 	export function read(callback: () => void, once?: boolean, throttle?: number) {
 		return add("read", callback, once, throttle);
-		// if (once == null) once = true;
-
-		// let resultCallback = callback;
-		// if (once)
-		// 	resultCallback = () => { removeReadEventHandler(id); callback() };
-		// if (throttle) {
-		// 	const originalResultCallback = resultCallback;
-		// 	resultCallback = () => {
-		// 		if ((frameNumber) % throttle === 0)
-		// 			originalResultCallback();
-		// 	};
-		// }
-
-		// const id = addReadEventHandler(resultCallback);
-		// return id;
 	}
 
 	/**
@@ -128,60 +113,17 @@ namespace DomAnimationLoop {
 	 */
 	export function write(callback: () => void, once?: boolean, throttle?: number) {
 		return add("write", callback, once, throttle);
-		// if (once == null) once = true;
-
-		// let resultCallback = callback;
-		// if (once)
-		// 	resultCallback = () => { removeWriteEventHandler(id); callback()};
-		// if (throttle) {
-		// 	const originalResultCallback = resultCallback;
-		// 	resultCallback = () => {
-		// 		if ((frameNumber) % throttle === 0)
-		// 			originalResultCallback();
-		// 	};
-		// }
-
-		// const id = addWriteEventHandler(resultCallback);
-		// return id;
 	}
-
-	/**
-	 * Remove a read callback that has been scheduled
-	 * @param id Callback ID, returned from animationLoop.read() function
-	 */
-	// export function removeReadEventHandler(id: number) {
-	// 	return removeEventHandler(reads, id);
-	// }
-
-	/**
-	 * Remove a write callback that has been scheduled
-	 * @param id Callback ID, returned from animationLoop.write() function
-	 */
-	// export function removeWriteEventHandler(id: number) {
-	// 	return removeEventHandler(writes, id);
-	// }
-
-	// function addWriteEventHandler(callback: () => void) {
-	// 	return addEventHandler("write", callback);
-	// }
 
 	/**
 	 * Keeps the frame number incrementing each frame
 	 */
-	function increment() {
+	function _increment() {
 		if (frameNumber === 59)
 			frameNumber = 0;
 		else
 			frameNumber++;
 	}
-
-	// function addReadEventHandler(callback: () => void) {
-	// 	return addEventHandler("read", callback);
-	// }
-
-	// function addReadEventHandler(callback: () => void) {
-	// 	return addEventHandler("read", callback);
-	// }
 
 	function _getPhaseIndex(name: string) {
 		const phaseIndex = phases.findIndex(p => p.name === name);
@@ -197,7 +139,7 @@ namespace DomAnimationLoop {
 		return phases[_getPhaseIndex(name)];
 	}
 
-	function addEventHandler(phaseName: string, callback: () => void) {
+	function _addEventHandler(phaseName: string, callback: () => void) {
 		const id = Math.random();
 
 		const phase = _getPhase(phaseName);
