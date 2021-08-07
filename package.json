@@ -6,7 +6,9 @@
   "types": "lib/main.d.ts",
   "scripts": {
     "build": "./node_modules/.bin/tsc --p tsconfig.json",
-    "test": "./node_modules/.bin/jest"
+    "test": "./node_modules/.bin/jest",
+    "coverage": "./node_modules/.bin/jest --coverage",
+    "report": "nyc merge .nyc_output coverage/coverage.json"
   },
   "repository": {
     "type": "git",

@@ -34,25 +34,19 @@ test("Reads should always precede writes", () => {
     })).resolves.toEqual(11.5);
 });
 
-// describe("DomAnimationLoop", () => {
-//     it("Reads should always precede writes", () => {
-//         global.requestAnimationFrame = (callback) => setTimeout(callback, 1); //?
+test("Should be able to throttle to every n frames", () => {
+    return expect(new Promise(resolve => {
+        let n = 2;
 
-//         //loop; //?
-//         // chai; //?
-//         // chaiAsPromised; //?
+        loop.read(() => {
+            n++;
+        }, false, 2);
 
-//         // return expect(new Promise((resolve) => {
-//         //     let n = 10;
+        requestAnimationFrame.step();
+        requestAnimationFrame.step();
+        requestAnimationFrame.step();
+        requestAnimationFrame.step();
 
-//         //     loop.write(() => {
-//         //         n += 6;
-//         //         resolve(n);
-//         //     });
-//         //     loop.read(() => {
-//         //         n /= 2;
-//         //     });
-//         // })).to.eventually.equal(12);
-        
-//     });
-// })
+        resolve(n);
+    })).resolves.toEqual(4);
+});

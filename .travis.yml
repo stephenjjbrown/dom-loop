@@ -5,8 +5,7 @@ script:
 - npm install
 - npm run build
 - npm run coverage
-- npm run report
 after_success:
 - curl -s https://codecov.io/bash > .codecov
 - chmod +x .codecov
-- ./.codecov -t 6e40abbf-4e64-4639-9fb3-447cdc7904c6
+- ./.codecov -t b9934e23-c6f2-4a95-8c21-5ed5c20d5976

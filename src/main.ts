@@ -45,7 +45,7 @@ namespace DomAnimationLoop {
 				handlers.forEach(h => h.callback());
 			});
 
-			_increment(); 
+			frameNumber++;
 
 			requestAnimationFrame(loop);
 		};
@@ -113,16 +113,6 @@ namespace DomAnimationLoop {
 	 */
 	export function write(callback: () => void, once?: boolean, throttle?: number) {
 		return add("write", callback, once, throttle);
-	}
-
-	/**
-	 * Keeps the frame number incrementing each frame
-	 */
-	function _increment() {
-		if (frameNumber === 59)
-			frameNumber = 0;
-		else
-			frameNumber++;
 	}
 
 	function _getPhaseIndex(name: string) {
