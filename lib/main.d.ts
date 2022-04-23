@@ -13,6 +13,7 @@ export interface LoopPhase {
 declare namespace DomAnimationLoop {
     let frameNumber: number;
     const phases: LoopPhase[];
+    let _firstEventAdded: boolean;
     function addPhaseBefore(newPhaseName: string, before: string): void;
     function addPhaseAfter(newPhaseName: string, after: string): void;
     function add(phase: string, callback: () => void, once?: boolean, throttle?: number): number;

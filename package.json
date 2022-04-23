@@ -1,6 +1,6 @@
 {
   "name": "dom-loop",
-  "version": "2.0.1-beta",
+  "version": "2.1.0",
   "description": "Batches DOM read/write operations within a constant requestAnimationFrame loop",
   "keywords": [
     "animation",
@@ -19,8 +19,8 @@
   "types": "lib/main.d.ts",
   "scripts": {
     "build": "./node_modules/.bin/tsc --p tsconfig.json",
-    "test": "./node_modules/.bin/jest",
-    "coverage": "./node_modules/.bin/jest --coverage",
+    "test": "./node_modules/.bin/jest --env=jsdom",
+    "coverage": "./node_modules/.bin/jest --env=jsdom --coverage",
     "report": "nyc merge .nyc_output coverage/coverage.json"
   },
   "repository": {

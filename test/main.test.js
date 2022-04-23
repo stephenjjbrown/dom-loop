@@ -1,10 +1,15 @@
 const {performance} = require('perf_hooks');
-const { loop } = require("../lib/main");
 const { replaceRaf } = require("raf-stub");
+
+let loop;
 
 beforeEach(() => {
     global.performance = performance;
     replaceRaf([global]);
+
+    jest.resetModules();
+    window["_domAnimationLoop"] = undefined; // Destroy previous singleton instance
+    loop = require("../lib/main").loop;
 });
 
 test("Reads should always precede writes", () => {
@@ -94,10 +99,29 @@ test("Should be able to add custom phases after existing ones", () => {
 
 
 test("Should throw if attempt to add to non-existent phase", () => {
-    expect(() => loop.add("none", () => {})).toThrow();
+    return expect(() => loop.add("none", () => {})).toThrow();
 })
 
+test("Should start loop only after first event handler added", () => {
+    return expect(new Promise(resolve => {
+        expect(loop.frameNumber).toEqual(0);
+
+        requestAnimationFrame.step();
+
+        expect(loop.frameNumber).toEqual(0);
+
+        loop.read(() => null);
+        loop.read(() => null);
+
+        requestAnimationFrame.step();
+
+        resolve(loop.frameNumber);
+    })).resolves.toBe(1);
+});
+
 test("Should return false if attempting to remove event that is no longer in queue", () => {
+    let { loop } = require("../lib/main");
+
     return expect(new Promise(resolve => {
         let n = 1;
         const id = loop.read(() => n++, false);
@@ -114,4 +138,15 @@ test("Should return false if attempting to remove event that is no longer in que
         resolve(n);
     })).resolves.toEqual(3);
     
+})
+
+
+test("Should re-use same instance if imported twice via different bundles or libraries on the same page", () => {
+    let { loop } = require("../lib/main");
+
+    jest.resetModules(); // Allows us to import a copy of the same module imported using require()
+
+    const { loop: loop2 } = require("../lib/main"); // To test multiple imports on same page
+
+    expect(loop2).toBe(loop);
 })

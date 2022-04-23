@@ -8,6 +8,8 @@ export interface LoopPhase {
 	handlers: LoopEventHandler[];
 }
 
+
+
 /**
  * Similar to fastdom. Prevents layout thrashing by batching DOM read and DOM write operations
  * It uses an frame-by-frame loop as its core, however.
@@ -26,18 +28,13 @@ namespace DomAnimationLoop {
 			handlers: []
 		}
 	];
-	// const reads: LoopEventHandler[] = [];
-	// const writes: LoopEventHandler[] = [];
 
 	// Loop isn't created till at least one event added
-	let _firstEventAdded = false;
+	export let _firstEventAdded = false;
 
 	function _startLoop() {
 		// The main loop
 		const loop = () => {
-			// console.log("reads", reads); //?
-			// console.log("writes", writes); //?
-
 			phases.forEach(phase => {
 				// slice has to be used to duplicate array in case the array is mutated while execution of callbacks is taking place
 				const handlers = phase.handlers.slice(0);
@@ -141,6 +138,7 @@ namespace DomAnimationLoop {
 
 		// Initialize loop on first event
 		if (!_firstEventAdded) {
+			_firstEventAdded = true;
 			_startLoop();
 		}
 
@@ -163,7 +161,12 @@ namespace DomAnimationLoop {
 	}
 }
 
+
+/* istanbul ignore next */
+if (!window["_domAnimationLoop"]) // This ensures only one loop will be instantiated even if multiple bundles include this
+	window["_domAnimationLoop"] = DomAnimationLoop;
+
 /**
  * Singleton instance of animation loop. A frame-by-frame loop used for animating DOM elements, as well as batching DOM read and write operations
  */
-export const loop = DomAnimationLoop;
+export const loop: typeof DomAnimationLoop = window["_domAnimationLoop"];
